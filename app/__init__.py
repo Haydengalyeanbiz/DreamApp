@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from .config import Config
 from .models import db, User
+from .seeders import seed_commands
 
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
@@ -22,6 +23,7 @@ app.config.from_object(Config)
 
 #! BLUEPRINTS
 
+db.init_app(app)
 Migrate(app, db)
 CORS(app)
 
