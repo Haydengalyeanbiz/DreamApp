@@ -14,6 +14,11 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     hashed_password = db.Column(db.String(128), nullable=False)
+    #* -------future profile upgrades-------
+    # profile_pic = db.Column(db.String(3000))
+    # cover_pic = db.Column(db.String(3000))
+
+    dreams = db.relationship('Dream', back_populates='user')
 
     @property
     def password(self):
