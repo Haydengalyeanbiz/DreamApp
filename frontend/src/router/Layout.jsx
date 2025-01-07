@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { thunkAuthenticate } from '../redux/sessionReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import Navbar from '../components/Navbar/Navbar';
 
 export default function Layout() {
 	const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export default function Layout() {
 
 	return (
 		<>
+			<Navbar />
 			<div className='main-content'>{isLoaded && <Outlet />}</div>
 		</>
 	);

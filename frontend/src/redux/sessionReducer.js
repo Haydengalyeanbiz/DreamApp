@@ -62,23 +62,26 @@ export const thunkSignup = (user) => async (dispatch) => {
 };
 
 export const thunkLogout = () => async (dispatch) => {
-	await fetch('/api/auth/logout');
-	dispatch(removeUser());
+	const response = await fetch('/api/auth/logout');
+	if (response.ok) {
+		const success = await response.json();
+		dispatch(removeUser());
+		return success;
+	}
 };
 
 // !INITIAL STATE
 const initialState = {
-	userInfo: null,
-	isLoading: false,
-	error: null,
+	user: null,
+	isAuthenticated: false,
 };
 
 function sessionReducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_USER:
-			return { ...state, user: action.payload };
+			return { ...state, user: action.payload, isAuthenticated: true };
 		case REMOVE_USER:
-			return { ...state, user: null };
+			return { ...state, user: null, isAuthenticated: false };
 		default:
 			return state;
 	}
