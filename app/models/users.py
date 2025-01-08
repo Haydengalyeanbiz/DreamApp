@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     # profile_pic = db.Column(db.String(3000))
     # cover_pic = db.Column(db.String(3000))
 
-    dreams = db.relationship('Dream', back_populates='user')
+    dreams = db.relationship('Dream', back_populates='user', cascade='all, delete-orphan')
 
     @property
     def password(self):
