@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, send_from_directory
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_cors import CORS
@@ -63,9 +63,10 @@ def api_help():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def react_root(path):
-    if path == 'favicon.ico':
-        return app.send_from_directory(app.static_folder, 'favicon.ico')
-    return app.send_static_file('index.html')
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 #! Error handler for 404 not found
 @app.errorhandler(404)
