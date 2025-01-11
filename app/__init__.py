@@ -10,7 +10,7 @@ from .models import db, User
 from .seeders import seed_commands
 from .api.auth_routes import auth_routes
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'auth.login'
