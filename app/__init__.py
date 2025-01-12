@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, send_from_directory
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_cors import CORS
@@ -10,7 +10,7 @@ from .models import db, User
 from .seeders import seed_commands
 from .api.auth_routes import auth_routes
 
-app = Flask(__name__, static_folder='/frontend/dist', static_url_path='/')
+app = Flask(__name__, static_folder='/opt/render/project/src/frontend/dist', static_url_path='/')
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'auth.login'
@@ -63,9 +63,11 @@ def api_help():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def react_root(path):
-    if path == 'favicon.ico':
-        return app.send_from_directory('public', 'favicon.ico')
-    return app.send_static_file('index.html')
+    index_path = os.path.abspath(os.path.join(app.static_folder, 'index.html'))
+    app.logger.info('Attempting to serve index.html from: %s', index_path)
+    if not os.path.exists(index_path):
+        app.logger.error('index.html not found at: %s', index_path)
+    return send_from_directory(app.static_folder, 'index.html')
 
 #! Error handler for 404 not found
 @app.errorhandler(404)
