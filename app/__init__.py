@@ -20,7 +20,7 @@ def load_user(id):
 
 app.cli.add_command(seed_commands)
 
-app.config.from_object(Config)
+app.config.from_object(Config) 
 
 #! BLUEPRINTS
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
@@ -64,7 +64,7 @@ def api_help():
 @app.route('/<path:path>')
 def react_root(path):
     if path == 'favicon.ico':
-        return app.send_from_directory('public', 'favicon.ico')
+        return app.send_from_directory(app.static_folder, 'index.html')
     return app.send_static_file('index.html')
 
 #! Error handler for 404 not found
