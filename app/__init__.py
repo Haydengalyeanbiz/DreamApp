@@ -13,7 +13,7 @@ from .api.auth_routes import auth_routes
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
 login_manager = LoginManager(app)
-login_manager.login_view = 'auth.login'
+login_manager.login_view = 'auth.unauthorized'
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
@@ -63,11 +63,9 @@ def api_help():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def react_root(path):
-    index_path = os.path.abspath(os.path.join(app.static_folder, 'index.html'))
-    app.logger.info('Attempting to serve index.html from: %s', index_path)
-    if not os.path.exists(index_path):
-        app.logger.error('index.html not found at: %s', index_path)
-    return send_from_directory(app.static_folder, 'index.html')
+    if path == 'favicon.ico':
+        return app.send_from_directory('public', 'favicon.ico')
+    return app.send_static_file('index.html')
 
 #! Error handler for 404 not found
 @app.errorhandler(404)
