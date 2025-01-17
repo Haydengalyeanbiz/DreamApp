@@ -1,18 +1,14 @@
-import Lottie from 'react-lottie';
-import sleepingAnimation from '../../lotties/dream animation.json';
+import { useSelector } from 'react-redux';
+import './Masthead.css';
 
 const Masthead = () => {
-	const defaultOptions = {
-		loop: true,
-		autoplay: true,
-		animationData: sleepingAnimation,
-		rendererSettings: {
-			preserveAspectRatio: 'xMidYMid slice',
-		},
-	};
+	const user = useSelector((state) => state.session.user);
 	return (
-		<div>
-			<Lottie options={defaultOptions} />
+		<div className='masthead-wrapper'>
+			{/* <h1 className='masthead-title'>Welcome back {user.first_name}</h1> */}
+			<div className='masthead-btn-holder'>
+				<button className='masthead-add-new-btn'>Add a new Dream</button>
+			</div>
 		</div>
 	);
 };

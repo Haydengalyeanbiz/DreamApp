@@ -18,6 +18,7 @@ const Navbar = () => {
 
 	const handleSignOut = () => {
 		dispatch(thunkLogout());
+		navigate('/login');
 	};
 
 	return (

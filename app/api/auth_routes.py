@@ -24,10 +24,10 @@ def login():
             login_user(user)
             return user.to_dict()
         else:
-            print("Login failed: Invalid credentials")  # Debug print
+            print("Login failed: Invalid credentials")
             return {'error': 'Invalid credentials'}, 401
     else:
-        print("Form errors:", form.errors)  # Debug print
+        print("Form errors:", form.errors)
         return form.errors, 401
 
 @auth_routes.route('/logout', methods=["POST"])

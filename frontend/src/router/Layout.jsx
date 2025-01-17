@@ -7,13 +7,18 @@ import Navbar from '../components/Navbar/Navbar';
 export default function Layout() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const user = useSelector((state) => state.session.user);
+	const [isLoaded, setIsLoaded] = useState(false);
+	const sessionUser = useSelector((state) => state.session.user);
 
 	useEffect(() => {
-		if (!user) {
+		dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (isLoaded && !sessionUser) {
 			navigate('/login');
 		}
-	}, [user]);
+	}, [isLoaded, sessionUser, navigate]);
 	return (
 		<>
 			<Navbar />

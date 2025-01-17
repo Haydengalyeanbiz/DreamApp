@@ -63,7 +63,10 @@ export const thunkSignup = (user) => async (dispatch) => {
 };
 
 export const thunkLogout = () => async (dispatch) => {
-	const response = await fetch('/api/auth/logout');
+	const response = await fetch('/api/auth/logout', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+	});
 	if (response.ok) {
 		const success = await response.json();
 		dispatch(removeUser());

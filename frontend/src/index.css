@@ -19,7 +19,8 @@
 	--fs-huge: 72px;
 
 	/* !ANIMATIONS */
-	--hover: all 0.3s ease-in-out;
+	--hover: all 0.2s ease-in-out;
+	--color: color 0.5s;
 }
 
 html,

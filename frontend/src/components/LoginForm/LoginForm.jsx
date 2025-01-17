@@ -2,6 +2,8 @@ import { thunkLogin } from '../../redux/sessionReducer';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Lottie from 'lottie-react';
+import fishingAnimation from '../../lotties/fishingboat.json';
 import './LoginForm.css';
 
 const LoginForm = () => {
@@ -13,6 +15,14 @@ const LoginForm = () => {
 	});
 	const [errors, setErrors] = useState({});
 	const [hasSubmitted, setHasSubmitted] = useState(false);
+
+	const defaultOptions = {
+		loop: true,
+		autoplay: true,
+		rendererSettings: {
+			preserveAspectRatio: 'xMidYmid slice',
+		},
+	};
 
 	const handleChange = (e) => {
 		setFormData({
@@ -54,6 +64,15 @@ const LoginForm = () => {
 
 	return (
 		<div className='login-form-wrapper'>
+			<div className='login-animation-holder'>
+				<Lottie
+					className='fishing-animation'
+					animationData={fishingAnimation}
+					options={defaultOptions}
+					style={{ width: '600px', height: '600px' }}
+					speed={0.1}
+				/>
+			</div>
 			<form
 				className='login-form'
 				onSubmit={handleSubmit}
@@ -62,9 +81,10 @@ const LoginForm = () => {
 					<h2>Login! </h2>
 					<h3>Start Dreaming</h3>
 				</div>
-				<label className=''>
+				<label className='login-form-label'>
 					Email
 					<input
+						className='login-form-input'
 						type='text'
 						name='email'
 						value={formData.email}
@@ -73,9 +93,10 @@ const LoginForm = () => {
 					/>
 				</label>
 				{hasSubmitted && errors.email && <p>{errors.email}</p>}
-				<label>
+				<label className='login-form-label'>
 					Password
 					<input
+						className='login-form-input'
 						type='text'
 						name='password'
 						value={formData.password}
@@ -84,7 +105,12 @@ const LoginForm = () => {
 					/>
 				</label>
 				{hasSubmitted && errors.password && <p>{errors.password}</p>}
-				<button type='submit'>Log In</button>
+				<button
+					className='login-form-submit'
+					type='submit'
+				>
+					Log In
+				</button>
 			</form>
 		</div>
 	);

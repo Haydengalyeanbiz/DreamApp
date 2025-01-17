@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, send_from_directory
+from flask import Flask, request, redirect, send_from_directory, session
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_cors import CORS
@@ -27,7 +27,12 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 
 db.init_app(app)
 Migrate(app, db)
-CORS(app)
+CORS(app, supports_credentials=True)
+
+# @app.before_request
+# def ensure_csrf_protection():
+#     if 'csrf_token' not in session:
+#         session['csrf_token'] = generate_csrf()
 
 @app.before_request
 def https_redirect():
